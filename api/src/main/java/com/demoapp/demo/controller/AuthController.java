@@ -1,3 +1,4 @@
+
 package com.demoapp.demo.controller;
 
 import java.util.Map;
@@ -28,6 +29,7 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> signup(@RequestBody UserDTO userDTO) {
+
     if (!service.isEmailValid(userDTO.getEmail())) {
       return ResponseEntity
           .status(422)
@@ -43,15 +45,20 @@ public class AuthController {
     if (service.findByEmail(userDTO.getEmail()) != null) {
       return ResponseEntity
           .status(409)
-          .body(new ErrorResponse("E-mail já está em uso", 409));
+          .body(new ErrorResponse("E-mail já cadastrado", 409));
     }
 
-    User createdUser = service.createUser(userDTO.getEmail(), userDTO.getPassword());
+    User createdUser = service.createUser(
+        userDTO.getEmail(),
+        userDTO.getPassword()
+    );
+
     return ResponseEntity.ok(createdUser);
   }
 
   @PostMapping("/signin")
   public ResponseEntity<?> signin(@RequestBody UserDTO userDTO) {
+
     if (!service.isEmailValid(userDTO.getEmail())) {
       return ResponseEntity
           .status(422)
@@ -66,16 +73,20 @@ public class AuthController {
 
     User user = service.findByEmail(userDTO.getEmail());
 
-    if (user == null || !user.getPassword().equals(userDTO.getPassword())) {
+    if (user == null ||
+        !user.getPassword().equals(userDTO.getPassword())) {
+
       return ResponseEntity
           .status(401)
           .body(new ErrorResponse("Credenciais inválidas", 401));
     }
+
     return ResponseEntity.ok(user);
   }
 
   @PostMapping("/reset-password")
   public ResponseEntity<?> resetPassword(@RequestBody EmailDTO emailDTO) {
+
     if (!service.isEmailValid(emailDTO.getEmail())) {
       return ResponseEntity
           .status(422)
@@ -90,7 +101,11 @@ public class AuthController {
           .body(new ErrorResponse("Usuário não encontrado", 404));
     }
 
-    return ResponseEntity.ok(Map.of("message", "Senha redefinida com sucesso (fake)"));
+    return ResponseEntity.ok(
+        Map.of(
+            "message",
+            "Senha redefinida com sucesso (fake)"
+        )
+    );
   }
-
 }

@@ -1,0 +1,26 @@
+# Dependências Node.js
+node_modules/
+npm-debug.log*
+
+# Resultados do Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Arquivos de ambiente e credenciais
+.env
+.env.*
+!.env.example
+
+# Build do Next.js
+.next/
+out/
+
+# Build do Java
+target/
+
+# Arquivos temporários
+*.log
+.DS_Store
+Thumbs.db
