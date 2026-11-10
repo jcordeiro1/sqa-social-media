@@ -56,16 +56,15 @@ jobs:
           chmod +x mvnw
           ./mvnw -B test
 
-      - name: Instalar dependências do site
+      - name: Instalar dependencias do site
         working-directory: client
-        # O lockfile original do frontend não é compatível com npm ci.
         run: npm install --no-audit --no-fund
 
       - name: Executar testes Jest
         working-directory: client
-        run: npm test -- --runInBand --passWithNoTests
+        run: npm test -- --runInBand
 
-      - name: Validar compilação do site
+      - name: Validar compilacao do site
         working-directory: client
         env:
           NEXT_PUBLIC_BASE_URL: http://127.0.0.1:8081
@@ -114,7 +113,7 @@ jobs:
           CI: 'true'
         run: npx playwright test tests/api tests/e2e --project=chromium --workers=1 --reporter=line
 
-      - name: Guardar relatório em caso de falha
+      - name: Guardar relatorio em caso de falha
         if: failure()
         uses: actions/upload-artifact@v4
         with:
